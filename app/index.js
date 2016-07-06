@@ -4,9 +4,13 @@
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../app/styles/common.css'
+import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import ReactDOM from 'react-dom';
-import BoxComponent from './scripts/components/BoxComponent';
-import {CommonButton} from './scripts/components/ButtonComponent';
+
+/*router views*/
+import MainView from './scripts/views/mainView';
+import ButtonView from './scripts/views/buttonView';
+import HomeView from './scripts/views/homeView';
 
 class HelloWorldComponent extends React.Component {
     constructor() {
@@ -15,13 +19,12 @@ class HelloWorldComponent extends React.Component {
     }
     render() {
         return (
-            <div>
-                <div style={{backgroundColor: 'red', width: '200px'}} className="text-center">Hello</div>
-                <BoxComponent></BoxComponent>
-                <CommonButton></CommonButton>
-                <div className="h50 w300">World!</div>
-                <div>Begin React!</div>
-            </div>
+            <Router history={hashHistory}>
+                <Route path="/" component={MainView}>
+                    <IndexRoute component={HomeView}></IndexRoute>
+                    <Route path="/button" component={ButtonView}></Route>
+                </Route>
+            </Router>
         );
     }
 }
