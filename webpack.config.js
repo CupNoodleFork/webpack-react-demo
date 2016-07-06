@@ -60,6 +60,7 @@ module.exports = {
         // new webpack.optimize.UglifyJsPlugin({minimize: true}),
         new webpack.HotModuleReplacementPlugin(),
         new ExtractTextPlugin("[name].[hash].css", {allChunks: true}),
+        new webpack.DefinePlugin({ "global.GENTLY": false }),
         new webpack.ProvidePlugin({//注入插件的全局变量
             $: "jquery",
             jQuery: "jquery",
@@ -73,6 +74,9 @@ module.exports = {
             inject: 'body'
         }),
     ],
+    node: {
+        __dirname: true,
+    },
     devtool: 'eval-source-map',
     devServer: {
         contentBase: '/build',
