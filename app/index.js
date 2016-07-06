@@ -6,6 +6,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../app/styles/common.css'
 import ReactDOM from 'react-dom';
 import BoxComponent from './scripts/components/BoxComponent';
+import {CommonButton} from './scripts/components/ButtonComponent';
+
 class HelloWorldComponent extends React.Component {
     constructor() {
         super();
@@ -16,6 +18,7 @@ class HelloWorldComponent extends React.Component {
             <div>
                 <div style={{backgroundColor: 'red', width: '200px'}} className="text-center">Hello</div>
                 <BoxComponent></BoxComponent>
+                <CommonButton></CommonButton>
                 <div className="h50 w300">World!</div>
                 <div>Begin React!</div>
             </div>
