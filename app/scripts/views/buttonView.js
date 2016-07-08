@@ -4,6 +4,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import request from 'superagent';
+
 class buttonView extends React.Component {
     constructor(props) {
         super(props);
@@ -20,7 +21,7 @@ class buttonView extends React.Component {
     render() {
         return (
             <div>
-                <div>button</div>
+                <div className="stylus-div w100">button</div>
                 <Button bsStyle="primary" bsSize="small" onClick={this.ajaxTest.bind(this,'hhh')}>It's a button</Button>
             </div>
         );

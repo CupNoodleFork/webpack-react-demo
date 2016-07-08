@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../app/styles/common.css'
+import '../app/styles/common.css';
+import '../app/styles/styles.styl';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import ReactDOM from 'react-dom';
 

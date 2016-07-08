@@ -6,9 +6,12 @@ var webpack = require('webpack');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var extractCSS = new ExtractTextPlugin("styles/[name].[hash].css");
+
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
+
 module.exports = {
     entry: {
         app: [
@@ -37,11 +40,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style', 'css')
+                loader: extractCSS.extract('style', 'css')
             },
             {
-                test: /\.scss$/,
-                loaders: ['style', 'css', 'sass']
+                test: /\.styl$/,
+                loader: extractCSS.extract('style', 'css!stylus')
             },
             {
                 test: /\.(svg|png|jpg|jpeg|gif)$/i,
@@ -54,13 +57,13 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']//可以import .jsx文件的脚本
+        extensions: ['', '.js', '.jsx', '.styl']//可以import .jsx文件的脚本
     },
     plugins: [
         // new webpack.optimize.UglifyJsPlugin({minimize: true}),
         new webpack.HotModuleReplacementPlugin(),
-        new ExtractTextPlugin("[name].[hash].css", {allChunks: true}),
         new webpack.DefinePlugin({ "global.GENTLY": false }),
+        extractCSS,
         new webpack.ProvidePlugin({//注入插件的全局变量
             $: "jquery",
             jQuery: "jquery",
