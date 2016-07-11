@@ -13,3 +13,8 @@
 .h50 {
     height: 50px;
 }
+.bk {
+    width: 40px;
+    height: 40px;
+    background-image: url("../images/icon_td_delete_20_gray@2x.png");
+}

@@ -1,28 +1,39 @@
 /**
  * Created by haizhi on 16/7/5.
  */
+var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var precss = require('precss');
+var autoprefixer = require('autoprefixer');
 
-var extractCSS = new ExtractTextPlugin("styles/[name].[hash].css");
+var extractCSS = new ExtractTextPlugin("[name].[hash].css");
 
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
+var INDEX_SCRIPT = path.resolve(APP_PATH, 'index.js');
 
-module.exports = {
+
+var config = {
     entry: {
         app: [
-            APP_PATH,
+            path.resolve(APP_PATH, 'index.js')
         ],
-        vendors: ['jquery']//vendors.js 里面的文件
+        vendors: ['react','react-dom']//vendors.js 里面的文件
 
     },
+    /*externals: {
+        'react': 'react',
+        'react-dom': 'react-dom'
+    },*/
     output: {
         path: BUILD_PATH,
-        filename: '[name].[hash].js'
+        filename: '[name].[hash].js',
+        chunkFilename: '[id].chunk.js',
+        // publicPath: '/build/'
     },
     module: {
         perLoders: [
@@ -40,35 +51,48 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: extractCSS.extract('style', 'css')
-            },
-            {
-                test: /\.styl$/,
-                loader: extractCSS.extract('style', 'css!stylus')
+                loader: extractCSS.extract('style', 'css!postcss')
             },
             {
                 test: /\.(svg|png|jpg|jpeg|gif)$/i,
-                loaders: ['url-loader?limit=8192']
+                loaders: ['url-loader?limit=8192&name=images/[name].[ext]']
             },
             {test: /\.eot/,loader : 'file?prefix=font/'},
             {test: /\.woff/,loader : 'file?prefix=font/&limit=10000&mimetype=application/font-woff'},
             {test: /\.ttf/, loader : 'file?prefix=font/'},
             {test: /\.svg/, loader : 'file?prefix=font/'}
+        ],
+        noParse: [
+            // 'react-router/umd/ReactRouter.min.js',
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.styl']//可以import .jsx文件的脚本
+        extensions: ['', '.js', '.jsx'],//可以import .jsx文件的脚本
+        alias: {//模块注册
+            // 'react-router': 'react-router/umd/ReactRouter.min.js',
+        }
     },
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin({minimize: true}),
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,  // remove all comments
+            },
+            compress: {
+                warnings: false
+            }
+        }),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({ "global.GENTLY": false }),
+        new webpack.optimize.CommonsChunkPlugin('vendors',  'vendors.js'),
+        new webpack.DefinePlugin({
+            // 'process.env.NODE_ENV': JSON.stringify('development')
+            'process.env.NODE_ENV': JSON.stringify('production')
+        }),
         extractCSS,
-        new webpack.ProvidePlugin({//注入插件的全局变量
+        /*new webpack.ProvidePlugin({//注入插件的全局变量
             $: "jquery",
             jQuery: "jquery",
             "window.jQuery": "jquery"
-        }),
+        }),*/
         new HtmlwebpackPlugin({//自动在build 目录下创建html文件
             title: 'React Test App',
             template: path.resolve(ROOT_PATH, 'index.html'),
@@ -80,15 +104,20 @@ module.exports = {
     node: {
         __dirname: true,
     },
-    devtool: 'eval-source-map',
+    postcss: function () {
+        return [autoprefixer({browsers:['last 2 versions']}), precss];
+    },
+    devtool: 'eval',
     devServer: {
-        contentBase: '/build',
+        contentBase: BUILD_PATH,
         historyApiFallback: true,
         hot: true,
         inline: true,
         progress: true,
         host: '0.0.0.0',
-        port: '8080',
+        port: '8000',
+        profile: true,
+        colors: true,
         proxy: {
             '/api/*': {
                 target: 'http://www.weibangong.com',
@@ -103,3 +132,4 @@ module.exports = {
         "esnext": true
     },
 };
+module.exports = config;

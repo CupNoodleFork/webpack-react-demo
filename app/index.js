@@ -2,16 +2,22 @@
  * Created by haizhi on 16/7/5.
  */
 import React from 'react';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../app/styles/common.css';
-import '../app/styles/styles.styl';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import ReactDOM from 'react-dom';
 
 /*router views*/
-import MainView from './scripts/views/mainView';
-import ButtonView from './scripts/views/buttonView';
-import HomeView from './scripts/views/homeView';
+
+const rootRoute = {
+    childRoutes: [ {
+        path: '/',
+        component: require('./scripts/components/App'),
+        childRoutes: [
+            require('./scripts/routes/Home'),
+        ]
+    } ]
+}
 
 class HelloWorldComponent extends React.Component {
     constructor() {
@@ -20,11 +26,8 @@ class HelloWorldComponent extends React.Component {
     }
     render() {
         return (
-            <Router history={hashHistory}>
-                <Route path="/" component={MainView}>
-                    <IndexRoute component={HomeView}></IndexRoute>
-                    <Route path="/button" component={ButtonView}></Route>
-                </Route>
+            <Router history={hashHistory}
+            routes={rootRoute}>
             </Router>
         );
     }
