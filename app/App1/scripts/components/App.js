@@ -14,7 +14,7 @@ class App extends Component {
                 </div>
                 <div>Hello App1</div>
                 <CommonComponent1></CommonComponent1>
-                <div className="bk"></div>
+                <div className="bk trans"></div>
             </div>
         )
     }

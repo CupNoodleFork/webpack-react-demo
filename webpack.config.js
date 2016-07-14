@@ -120,7 +120,7 @@ var config = {
         __dirname: true,
     },
     postcss: function () {
-        return [autoprefixer({browsers:['last 2 versions']}), precss];
+        return [autoprefixer({browsers:['last 5 versions']}), precss];
     },
     devtool: 'eval',
     devServer: {
