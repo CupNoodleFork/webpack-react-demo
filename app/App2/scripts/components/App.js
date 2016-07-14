@@ -10,7 +10,7 @@ class App extends Component {
                 <div style={{ padding: 20 }}>
                     {this.props.children}
                 </div>
-                <div>Hello</div>
+                <div>Hello App2</div>
             </div>
         )
     }

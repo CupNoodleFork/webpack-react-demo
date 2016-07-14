@@ -36,6 +36,8 @@ var entries = fs.readdirSync(APP_PATH).reduce(function (entries, dir) {
     }
     return entries
 }, {});
+
+entries['commonComponent'] = path.join(ROOT_PATH, 'commonComponent');
 var config = {
     entry: entries,
     /*externals: {
@@ -83,6 +85,7 @@ var config = {
         extensions: ['', '.js', '.jsx'],//可以import .jsx文件的脚本
         alias: {//模块注册
             // 'react-router': 'react-router/umd/ReactRouter.min.js',
+            'wbg-common-component': path.join(ROOT_PATH, 'commonComponent')
         }
     },
     plugins: [
@@ -106,13 +109,13 @@ var config = {
             jQuery: "jquery",
             "window.jQuery": "jquery"
         }),*/
-        new HtmlwebpackPlugin({//自动在build 目录下创建html文件
+        /*new HtmlwebpackPlugin({//自动在build 目录下创建html文件
             title: 'React Test App',
             template: path.resolve(ROOT_PATH, 'index.html'),
             filename: 'App1/index.html',
             chunks: ['App1/index'],
             inject: 'body'
-        }),
+        }),*/
     ],
     node: {
         __dirname: true,
@@ -146,4 +149,19 @@ var config = {
         "esnext": true
     },
 };
+
+
+
+fs.readdirSync(APP_PATH).forEach(function (dir) {
+    if (fs.statSync(path.join(APP_PATH, dir)).isDirectory()) {
+        config.plugins.push(new HtmlwebpackPlugin({//自动在build 目录下创建html文件
+            title: 'App '+ dir,
+            template: path.resolve(ROOT_PATH, 'index.html'),
+            filename: dir+'/index.html',
+            chunks: [dir + '/index','commonComponent'],
+            inject: 'body'
+        }));
+    }
+});
+
 module.exports = config;
