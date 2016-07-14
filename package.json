@@ -4,7 +4,7 @@
   "description": "awsomeProject",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress --profile --colors --config webpack.production.config.js",
+    "build": "webpack --progress --profile --colors",
     "bundle": "babel-node tools/run bundle",
     "dev": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"

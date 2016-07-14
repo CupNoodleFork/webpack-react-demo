@@ -9,44 +9,57 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var precss = require('precss');
 var autoprefixer = require('autoprefixer');
 
-var extractCSS = new ExtractTextPlugin("[name].[hash].css");
+var extractCSS = new ExtractTextPlugin("[name].css");
 
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
-var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
-var INDEX_SCRIPT = path.resolve(APP_PATH, 'index.js');
+var BUILD_PATH = path.resolve(ROOT_PATH, '__build__');
 
 
+
+// entries.vendors = ['react','react-dom'];//vendors.js 里面的文件
+
+function fsExistsSync(path) {
+    try{
+        fs.accessSync(path,fs.F_OK);
+    }catch(e){
+        return false;
+    }
+    return true;
+}
+
+var entries = fs.readdirSync(APP_PATH).reduce(function (entries, dir) {
+    if (fs.statSync(path.join(APP_PATH, dir)).isDirectory()) {
+        if(fsExistsSync(path.join(APP_PATH, dir, 'index.js'))) {
+            entries[dir+'/index'] = path.join(APP_PATH, dir, 'index.js');
+        }
+    }
+    return entries
+}, {});
 var config = {
-    entry: {
-        app: [
-            path.resolve(APP_PATH, 'index.js')
-        ],
-        vendors: ['react','react-dom']//vendors.js 里面的文件
-
-    },
+    entry: entries,
     /*externals: {
         'react': 'react',
         'react-dom': 'react-dom'
     },*/
     output: {
         path: BUILD_PATH,
-        filename: '[name].[hash].js',
-        chunkFilename: '[id].chunk.js',
-        // publicPath: '/build/'
+        filename: '[name].js',
+        // chunkFilename: '[id].chunk.js',
+        // publicPath: '/__build__/'
     },
     module: {
         perLoders: [
             {
                 test: /\.js?$/,
-                include: APP_PATH,
+                exclude: /node_modules/,
                 loader: 'jshint-loader'
             }
         ],
         loaders: [
             {
                 test: /\.js?$/,
-                include: APP_PATH,
+                exclude: /node_modules/,
                 loader: 'babel-loader'
             },
             {
@@ -73,16 +86,16 @@ var config = {
         }
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
+        /*new webpack.optimize.UglifyJsPlugin({
             output: {
                 comments: false,  // remove all comments
             },
             compress: {
                 warnings: false
             }
-        }),
+        }),*/
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.CommonsChunkPlugin('vendors',  'vendors.js'),
+        new webpack.optimize.CommonsChunkPlugin('vendors.js'),//提取多入口文件公共依赖的模块
         new webpack.DefinePlugin({
             // 'process.env.NODE_ENV': JSON.stringify('development')
             'process.env.NODE_ENV': JSON.stringify('production')
@@ -96,8 +109,8 @@ var config = {
         new HtmlwebpackPlugin({//自动在build 目录下创建html文件
             title: 'React Test App',
             template: path.resolve(ROOT_PATH, 'index.html'),
-            filename: 'index.html',
-            chunks: ['app','vendors'],
+            filename: 'App1/index.html',
+            chunks: ['App1/index'],
             inject: 'body'
         }),
     ],
@@ -115,6 +128,7 @@ var config = {
         inline: true,
         progress: true,
         host: '0.0.0.0',
+        watch: true,
         port: '8000',
         profile: true,
         colors: true,

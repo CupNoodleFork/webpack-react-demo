@@ -3,7 +3,7 @@
  */
 import React from 'react';
 // import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../app/styles/common.css';
+import './styles/common.css';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import ReactDOM from 'react-dom';
 
@@ -14,7 +14,7 @@ const rootRoute = {
         path: '/',
         component: require('./scripts/components/App'),
         childRoutes: [
-            require('./scripts/routes/Home'),
+            require('./scripts/routes/Home/index.js'),
         ]
     } ]
 }
