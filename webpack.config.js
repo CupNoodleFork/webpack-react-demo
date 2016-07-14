@@ -37,8 +37,10 @@ var entries = fs.readdirSync(APP_PATH).reduce(function (entries, dir) {
     return entries
 }, {});
 
-entries['commonComponent'] = path.join(ROOT_PATH, 'commonComponent');
+entries['WBGComponent'] = path.join(ROOT_PATH, 'custom_modules','WBGComponent');
+
 var config = {
+    context: APP_PATH,
     entry: entries,
     /*externals: {
         'react': 'react',
@@ -70,7 +72,7 @@ var config = {
             },
             {
                 test: /\.(svg|png|jpg|jpeg|gif)$/i,
-                loaders: ['url-loader?limit=8192&name=images/[name].[ext]']
+                loaders: ['url-loader?limit=8192&name=[path][name].[ext]']
             },
             {test: /\.eot/,loader : 'file?prefix=font/'},
             {test: /\.woff/,loader : 'file?prefix=font/&limit=10000&mimetype=application/font-woff'},
@@ -82,11 +84,8 @@ var config = {
         ]
     },
     resolve: {
+        modulesDirectories: ['web_modules', 'node_modules','custom_modules'],
         extensions: ['', '.js', '.jsx'],//可以import .jsx文件的脚本
-        alias: {//模块注册
-            // 'react-router': 'react-router/umd/ReactRouter.min.js',
-            'wbg-common-component': path.join(ROOT_PATH, 'commonComponent')
-        }
     },
     plugins: [
         /*new webpack.optimize.UglifyJsPlugin({
@@ -158,7 +157,7 @@ fs.readdirSync(APP_PATH).forEach(function (dir) {
             title: 'App '+ dir,
             template: path.resolve(ROOT_PATH, 'index.html'),
             filename: dir+'/index.html',
-            chunks: [dir + '/index','commonComponent'],
+            chunks: [dir + '/index','WBGComponent'],
             inject: 'body'
         }));
     }

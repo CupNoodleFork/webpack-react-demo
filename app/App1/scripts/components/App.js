@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 
-import {CommonComponent1} from 'wbg-common-component';
+import CommonComponent1 from 'WBGComponent/component1';
 
 class App extends Component {
     render() {
@@ -14,9 +14,9 @@ class App extends Component {
                 </div>
                 <div>Hello App1</div>
                 <CommonComponent1></CommonComponent1>
+                <div className="bk"></div>
             </div>
         )
     }
 }
-
 module.exports = App

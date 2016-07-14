@@ -3,6 +3,5 @@
  */
 
 module.exports = {
-    CommonComponent1: require('./component1')
+    component1: require('./component1')
 };
-

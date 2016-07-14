@@ -17,6 +17,7 @@ class Home extends Component {
                         <li key={event.id}>{event.title}</li>
                     ))}
                 </ul>
+                <div>I'm a pic</div>
             </div>
         )
     }
