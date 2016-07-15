@@ -6,7 +6,6 @@ import React from 'react';
 import './styles/common.css';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import ReactDOM from 'react-dom';
-
 /*router views*/
 
 const rootRoute = {

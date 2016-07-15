@@ -4,7 +4,7 @@
 
 
 import React from 'react';
-
+import './styles.css';
 class Component1 extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +14,7 @@ class Component1 extends React.Component {
     }
     render() {
         return (
-            <div>I'm Common Component 1</div>
+            <div className="color-red">I'm Common Component 1</div>
         )
     }
 }
