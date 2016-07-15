@@ -74,13 +74,13 @@ var config = {
             },
             {
                 test: /\.(svg|png|jpg|jpeg|gif)$/i,
-                loaders: ['url-loader?limit=8192&name=[path][name].[ext]']
+                loaders: ['url-loader?limit=8192&name=/[path][name].[ext]']
             },
-            { test: /\.svg/, loader: 'url?limit=1&mimetype=image/svg+xml&name=[path][name].[ext]' },
-            { test: /\.woff/, loader: 'url?limit=1&mimetype=application/font-woff&name=[path][name].[ext]' },
-            { test: /\.woff2/, loader: 'url?limit=1&mimetype=application/font-woff2&name=[path][name].[ext]' },
-            { test: /\.[ot]tf/, loader: 'url?limit=1&mimetype=application/octet-stream&name=[path][name].[ext]' },
-            { test: /\.eot/, loader: 'url?limit=1&mimetype=application/vnd.ms-fontobject&name=[path][name].[ext]' }
+            { test: /\.svg/, loader: 'url?limit=40960&mimetype=image/svg+xml&name=/[path][name].[ext]' },
+            { test: /\.woff/, loader: 'url?limit=40960&mimetype=application/font-woff&name=/[path][name].[ext]' },
+            { test: /\.woff2/, loader: 'url?limit=40960&mimetype=application/font-woff2&name=/[path][name].[ext]' },
+            { test: /\.[ot]tf/, loader: 'url?limit=40960&mimetype=application/octet-stream&name=/[path][name].[ext]' },
+            { test: /\.eot/, loader: 'url?limit=40960&mimetype=application/vnd.ms-fontobject&name=/[path][name].[ext]' }
         ],
         noParse: [
             // 'react-router/umd/ReactRouter.min.js',
