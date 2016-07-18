@@ -39,10 +39,10 @@ var entries = fs.readdirSync(APP_PATH).reduce(function (entries, dir) {
 
 entries['custom_modules/WBGComponent/index'] = path.join(ROOT_PATH, 'custom_modules','WBGComponent');
 entries['_source'] = path.join(ROOT_PATH, 'source', 'index.js');
-entries['_vendors'] = ['react','react-dom','react-router'];
+entries['_vendors'] = ['react','react-dom','react-router','redux','react-redux'];
 
 var config = {
-    context: ROOT_PATH,
+    // context: ROOT_PATH,
     entry: entries,
     /*externals: {
      'react': 'react',
@@ -52,7 +52,7 @@ var config = {
         path: BUILD_PATH,
         filename: '[name].js',
         // chunkFilename: '[id].chunk.js',
-        // publicPath: '/__build__/'
+        // publicPath: '/'
     },
     module: {
         perLoders: [
@@ -74,13 +74,13 @@ var config = {
             },
             {
                 test: /\.(svg|png|jpg|jpeg|gif)$/i,
-                loaders: ['url-loader?limit=8192&name=/[path][name].[ext]']
+                loaders: ['url-loader?limit=0&name=[path][name].[ext]']
             },
-            { test: /\.svg/, loader: 'url?limit=10240&mimetype=image/svg+xml&name=/[path][name].[ext]' },
-            { test: /\.woff/, loader: 'url?limit=10240&mimetype=application/font-woff&name=/[path][name].[ext]' },
-            { test: /\.woff2/, loader: 'url?limit=10240&mimetype=application/font-woff2&name=/[path][name].[ext]' },
-            { test: /\.[ot]tf/, loader: 'url?limit=10240&mimetype=application/octet-stream&name=/[path][name].[ext]' },
-            { test: /\.eot/, loader: 'url?limit=10240&mimetype=application/vnd.ms-fontobject&name=/[path][name].[ext]' }
+            { test: /\.svg/, loader: 'url?limit=0&mimetype=image/svg+xml&name=[path][name].[ext]' },
+            { test: /\.woff/, loader: 'url?limit=0&mimetype=application/font-woff&name=[path][name].[ext]' },
+            { test: /\.woff2/, loader: 'url?limit=0&mimetype=application/font-woff2&name=[path][name].[ext]' },
+            { test: /\.[ot]tf/, loader: 'url?limit=0&mimetype=application/octet-stream&name=[path][name].[ext]' },
+            { test: /\.eot/, loader: 'url?limit=0&mimetype=application/vnd.ms-fontobject&name=[path][name].[ext]' }
         ],
         noParse: [
             // 'react-router/umd/ReactRouter.min.js',

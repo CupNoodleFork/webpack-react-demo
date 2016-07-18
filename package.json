@@ -4,7 +4,7 @@
   "description": "awsomeProject",
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production webpack -p --progress --profile --colors --display-chunks --display-modules --config webpack.production.config.js",
+    "build": "NODE_ENV=production webpack -p --progress --profile --colors --display-chunks --display-modules",
     "bundle": "babel-node tools/run bundle",
     "dev": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -31,7 +31,10 @@
     "precss": "^1.4.0",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
+    "react-redux": "^4.4.5",
     "react-router": "^2.5.2",
+    "redux": "^3.5.2",
+    "resolve-url-loader": "^1.6.0",
     "style-loader": "^0.13.1",
     "superagent": "^2.0.0",
     "url-loader": "^0.5.7",
@@ -44,6 +47,7 @@
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.10",
+    "redux-devtools": "^3.3.1",
     "webpack-dev-server": "^1.14.1"
   }
 }
