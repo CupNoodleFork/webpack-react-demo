@@ -3,5 +3,6 @@
  */
 
 module.exports = {
-    component1: require('./component1')
+    Component1: require('./scripts/Component1'),
+    Component2: require('./scripts/Component2')
 };

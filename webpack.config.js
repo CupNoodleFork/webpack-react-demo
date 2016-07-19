@@ -38,7 +38,7 @@ var entries = fs.readdirSync(APP_PATH).reduce(function (entries, dir) {
 }, {});
 
 entries['custom_modules/WBGComponent/index'] = path.join(ROOT_PATH, 'custom_modules','WBGComponent','index.js');
-entries['source/index'] = path.join(ROOT_PATH, 'source', 'index.js');
+// entries['source/index'] = path.join(ROOT_PATH, 'source', 'index.js');
 entries['_vendors'] = ['react','react-dom','react-router','redux','react-redux'];
 
 var config = {
@@ -107,10 +107,11 @@ var config = {
                 warnings: false
             }
         }),*/
+        new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
-            name: '_vendors',
-            filename: '_vendors.js',
+            name: ['custom_modules/WBGComponent/index','_vendors'],
+            filename: '[name].js',
             minChunks: Infinity
         }),//提取多入口文件公共依赖的模块
         new webpack.DefinePlugin({
@@ -173,7 +174,8 @@ fs.readdirSync(APP_PATH).forEach(function (dir) {
                 title: 'App '+ dir,
                 template: path.resolve(ROOT_PATH, 'index.html'),
                 filename: 'app/'+dir+'/index.html',
-                chunks: ['app/'+dir + '/index','custom_modules/WBGComponent/index','source/index'],
+                chunks: ['app/'+dir + '/index','custom_modules/WBGComponent/index'],
+                // chunks: ['app/'+dir + '/index'],
                 inject: 'body'
             }));
         }

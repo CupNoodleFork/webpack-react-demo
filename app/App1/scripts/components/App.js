@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 
-import CommonComponent1 from 'WBGComponent/component1';
+import { Component1, Component2 } from 'WBGComponent';
 
 class App extends Component {
     render() {
@@ -13,9 +13,9 @@ class App extends Component {
                     {this.props.children}
                 </div>
                 <div>Hello App1</div>
-                <CommonComponent1></CommonComponent1>
+                <Component1></Component1>
+                <Component2></Component2>
                 <div className="bk trans"></div>
-                <div className="icon icon-1"></div>
             </div>
         )
     }

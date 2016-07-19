@@ -4,7 +4,9 @@
 
 
 import React from 'react';
-import './styles.css';
+import '../../styles/styles.css';
+import '../../styles/images.css'
+
 class Component1 extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +16,10 @@ class Component1 extends React.Component {
     }
     render() {
         return (
-            <div className="color-red">I'm Common Component 1</div>
+            <div>
+                <div className="color-red">I'm Common Component 1</div>
+                <div className="icon-1 icon-s12"></div>
+            </div>
         )
     }
 }
