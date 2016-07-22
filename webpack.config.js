@@ -51,6 +51,8 @@ var config = {
     output: {
         path: BUILD_PATH,
         filename: '[name].js',
+        hotUpdateChunkFilename: '/[id].[hash].hot-update.js',
+        hotUpdateMainFilename: '/[hash].hot-update.json',
         // chunkFilename: '[id].chunk.js',
         // publicPath: ''
     },
@@ -107,16 +109,14 @@ var config = {
                 warnings: false
             }
         }),*/
-        new webpack.optimize.DedupePlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: ['custom_modules/WBGComponent/index','_vendors'],
-            filename: '[name].js',
             minChunks: Infinity
         }),//提取多入口文件公共依赖的模块
         new webpack.DefinePlugin({
-            // 'process.env.NODE_ENV': JSON.stringify('development')
-            'process.env.NODE_ENV': JSON.stringify('production')
+            'process.env.NODE_ENV': JSON.stringify('development')
+            // 'process.env.NODE_ENV': JSON.stringify('production')
         }),
         extractCSS,
         /*new webpack.ProvidePlugin({//注入插件的全局变量
@@ -147,7 +147,7 @@ var config = {
         progress: true,
         host: '0.0.0.0',
         watch: true,
-        port: '8000',
+        port: '8001',
         profile: true,
         colors: true,
         proxy: {
@@ -174,9 +174,10 @@ fs.readdirSync(APP_PATH).forEach(function (dir) {
                 title: 'App '+ dir,
                 template: path.resolve(ROOT_PATH, 'index.html'),
                 filename: 'app/'+dir+'/index.html',
-                chunks: ['app/'+dir + '/index','custom_modules/WBGComponent/index'],
+                chunks: ['app/'+dir + '/index','custom_modules/WBGComponent/index','_vendors'],
                 // chunks: ['app/'+dir + '/index'],
-                inject: 'body'
+                inject: 'body',
+                chunksSortMode: 'dependency'
             }));
         }
     }

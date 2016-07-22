@@ -4,6 +4,7 @@
 import React, { Component } from 'react'
 
 import { Component1, Component2 } from 'WBGComponent';
+import { Link } from 'react-router';
 
 class App extends Component {
     render() {
@@ -13,9 +14,10 @@ class App extends Component {
                     {this.props.children}
                 </div>
                 <div>Hello App1</div>
+                <div className="bk trans"></div>
                 <Component1></Component1>
                 <Component2></Component2>
-                <div className="bk trans"></div>
+                <Link to="/Home">to Home</Link>
             </div>
         )
     }
