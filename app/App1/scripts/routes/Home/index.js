@@ -4,7 +4,9 @@
 import React, { Component } from 'react'
 import { createStore } from 'redux';
 import todoApp from '../../reducers/testReducer';
+import { Provider } from 'react-redux';
 import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters } from '../../actions/testAction'
+import App from './containers/App';
 
 let store = createStore(todoApp);
 
@@ -13,24 +15,6 @@ class Home extends Component {
         const events = [
             { id: 0, title: 'essay due' }
         ]
-        console.log(store.getState())
-
-// 每次 state 更新时，打印日志
-// 注意 subscribe() 返回一个函数用来注销监听器
-        let unsubscribe = store.subscribe(() =>
-            console.log(store.getState())
-        )
-
-// 发起一系列 action
-        store.dispatch(addTodo('Learn about actions'))
-        store.dispatch(addTodo('Learn about reducers'))
-        store.dispatch(addTodo('Learn about store'))
-        store.dispatch(toggleTodo(0))
-        store.dispatch(toggleTodo(1))
-        store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
-
-// 停止监听 state 更新
-        unsubscribe();
         return (
             <div>
                 <h2>Home2</h2>
@@ -40,6 +24,9 @@ class Home extends Component {
                     ))}
                 </ul>
                 <div>I'm a pic 2</div>
+                <Provider store={store}>
+                    <App></App>
+                </Provider>
             </div>
         )
     }
